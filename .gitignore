@@ -25,3 +25,7 @@ webpack.records.json
 *.ngsummary.json
 *.metadata.json
 *.shim.ngstyle.ts
+
+# Local */
+# /server/config/local/
+/**/coverage/

@@ -1,0 +1,19 @@
+{
+  "globals": {
+    "ts-jest": {
+      "tsConfig": "src/tsconfig.spec.json"
+    }
+  },
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js",
+    "json"
+  ],
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  "testMatch": ["**/?(*.)+(spec|test).[jt]s?(x)" ],
+  "collectCoverageFrom" : ["./**/*.{js,jsx,tsx,ts}", "!**/node_modules/**", "!**/vendor/**"],
+  "coverageReporters": ["json", "lcov"]
+}

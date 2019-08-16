@@ -1,7 +1,10 @@
+import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { AngularUniversalModule, applyDomino } from '@nestjs/ng-universal';
-import { join } from 'path';
-import { DatabaseModule } from './modules/database/database.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as databaseConfig from './config/database';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/authentication/auth.module';
 
 const BROWSER_DIR = join(process.cwd(), 'dist/browser');
 applyDomino(global, join(BROWSER_DIR, 'index.html'));
@@ -10,13 +13,14 @@ applyDomino(global, join(BROWSER_DIR, 'index.html'));
     imports: [
         AngularUniversalModule.forRoot({
             viewsPath: BROWSER_DIR,
-            bundle: require('./../server/main'),
-            liveReload: true,
+            bundle: require('../server/main.js'),
+            liveReload: true
         }),
-        DatabaseModule
+        TypeOrmModule.forRoot(databaseConfig),
+        UsersModule,
+        AuthModule
     ],
     providers: [],
     controllers: []
 })
-export class ApplicationModule {
-}
+export class ApplicationModule {}
