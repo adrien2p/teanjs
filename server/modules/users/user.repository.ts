@@ -1,4 +1,4 @@
-import { TransactionalSoftDeletableRepository } from '../../shared/typeorm/repositories/TransactionalSoftDeletableRepository';
+import { TransactionalSoftDeletableRepository } from '../../common/typeorm/repositories/TransactionalSoftDeletableRepository';
 import { User } from './user.entity';
 import { EntityRepository } from 'typeorm';
 

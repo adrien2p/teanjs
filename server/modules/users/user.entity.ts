@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
-import { SoftDeletableEntity } from '../../shared/typeorm/entities/SoftDeletableEntity';
+import { SoftDeletableEntity } from '../../common/typeorm/entities/SoftDeletableEntity';
 
 @Entity('users')
 @Unique(['email'])

@@ -1,6 +1,11 @@
 import { EntityManager, FindConditions, ObjectID, ObjectLiteral, UpdateResult } from 'typeorm';
 import { TransactionalRepository } from './TransactionalRepository';
-import { CustomFindOneOptions, CustomForceFindConditions, CustomForceFindManyOptions } from '../customTypes';
+import {
+    CustomFindOneOptions,
+    CustomForceFindConditions,
+    CustomForceFindManyOptions,
+    CustomRemoveOptions
+} from '../customTypes';
 
 export class TransactionalSoftDeletableRepository<Entity extends ObjectLiteral> extends TransactionalRepository<
     Entity
@@ -40,7 +45,7 @@ export class TransactionalSoftDeletableRepository<Entity extends ObjectLiteral> 
         return await super.findOneOrFail(idsOrOptionsOrConditions as any, options);
     }
 
-    public async delete(
+    public async softDelete(
         criteria:
             | string
             | string[]
@@ -57,21 +62,22 @@ export class TransactionalSoftDeletableRepository<Entity extends ObjectLiteral> 
         return await manager.update(this.metadata.target as any, criteria, { deletedAt: new Date() });
     }
 
-    public async undoDelete(
-        criteria:
-            | string
-            | string[]
-            | number
-            | number[]
-            | Date
-            | Date[]
-            | ObjectID
-            | ObjectID[]
-            | FindConditions<Entity>,
-        transactionalEntityManager?: EntityManager
-    ): Promise<UpdateResult> {
-        const manager = transactionalEntityManager || this.manager;
-        return await manager.update(this.metadata.target as any, criteria, { deletedAt: null });
+    public async softRemove(entity: Entity, options: CustomRemoveOptions): Promise<Entity>;
+    public async softRemove(
+        entityOrEntities: Entity | Entity[],
+        options: CustomRemoveOptions = {}
+    ): Promise<Entity | Entity[]> {
+        const manager = options.transactionalEntityManager || this.manager;
+
+        entityOrEntities = Array.isArray(entityOrEntities) ? entityOrEntities : [entityOrEntities];
+        const updatedEntities: Entity[] = [];
+        for (const entity of entityOrEntities) {
+            entity.deletedAt = new Date();
+            const updatedEntity = await manager.save(entity);
+            updatedEntities.push(updatedEntity);
+        }
+
+        return updatedEntities.length === 1 ? updatedEntities.pop() : updatedEntities;
     }
 
     protected softDeletableOptionsUpdate(options: any = {}): any {

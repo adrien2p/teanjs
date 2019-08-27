@@ -2,7 +2,7 @@ import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { AngularUniversalModule, applyDomino } from '@nestjs/ng-universal';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as databaseConfig from './config/database';
+import * as databaseConfig from './environments/database';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/authentication/auth.module';
 

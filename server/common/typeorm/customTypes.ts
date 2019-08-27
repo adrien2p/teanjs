@@ -1,4 +1,4 @@
-import { SaveOptions, EntityManager, FindManyOptions, FindConditions, FindOneOptions } from 'typeorm';
+import { EntityManager, FindConditions, FindManyOptions, FindOneOptions, RemoveOptions, SaveOptions } from 'typeorm';
 
 export type CustomSaveOptions = SaveOptions & { transactionalEntityManager?: EntityManager };
 export type CustomNoReloadSaveOptions = CustomSaveOptions & { reload: false };
@@ -16,3 +16,5 @@ export type CustomForceFindConditions<T> = FindConditions<T> & {
 };
 
 export type CustomFindOneOptions<T> = FindOneOptions<T> & { transactionalEntityManager?: EntityManager };
+
+export type CustomRemoveOptions = RemoveOptions & { transactionalEntityManager?: EntityManager };

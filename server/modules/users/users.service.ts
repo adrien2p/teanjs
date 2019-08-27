@@ -4,7 +4,7 @@ import { CreateUserDto } from './dtos/createUser.dto';
 import { User } from './user.entity';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from './user.repository';
-import { CustomFindManyOptions, CustomFindOneOptions } from '../../shared/typeorm/customTypes';
+import { CustomFindManyOptions, CustomFindOneOptions } from '../../common/typeorm/customTypes';
 
 @Injectable()
 export class UsersService {

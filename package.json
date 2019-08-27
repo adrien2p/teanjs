@@ -1,7 +1,7 @@
 {
    "name": "teanjs-universal",
    "version": "1.0.0",
-   "description": "TypeORM - Express - Angular 8 - NestJS Server Side Rendering (SSR)",
+   "description": "TypeORM - Express - Angular 8 - NestJS Server Side Rendering (SSR) using universal",
    "main": " ",
    "author": "Adrien de Peretti <adrien.deperetti@gmail.com>",
    "license": "ISC",
@@ -21,7 +21,7 @@
       "test:unit:client": "ng test teanjs-universal",
       "test:e2e:client": "ng e2e teanjs-universal",
       "test:client": "npm run test:unit:client && npm run test:e2e:client",
-      "typeorm": "./node_modules/.bin/ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config server/config/database.ts",
+      "typeorm": "./node_modules/.bin/ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config server/environments/database.ts",
       "migration:create": "npm run typeorm migration:create -- -n ",
       "migration:run": "npm run typeorm -- migration:run",
       "migration:revert": "npm run typeorm -- migration:revert",

@@ -1,4 +1,4 @@
-import * as databaseConfig from '../../../config/database';
+import * as databaseConfig from '../../../environments/database';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getConnectionToken, TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from '../users.service';

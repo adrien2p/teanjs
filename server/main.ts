@@ -1,4 +1,4 @@
-import { appConfig } from './config/app';
+import { appConfig } from './environments/app';
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
