@@ -11,7 +11,7 @@
    ],
    "scripts": {
       "ng": "ng",
-      "format": "ng lint --fix=true teanjs-universal && ./node_modules/.bin/prettier '{server,src}/**/*.ts' --ignore-path .gitignore --write",
+      "format": "ng lint --fix=true teanjs-universal && ./node_modules/.bin/prettier '{server,client}/**/*.ts' --ignore-path .gitignore --write",
       "test:unit:server": "NODE_ENV=testing jest --config=./server/jest.spec.json",
       "test:unit:server:watch": "NODE_ENV=testing jest --watch --config=./server/jest.spec.json",
       "test:unit:server:coverage": "NODE_ENV=testing jest --config=./server/jest.spec.json --coverage --coverageDirectory=coverage",

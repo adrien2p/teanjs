@@ -7,28 +7,28 @@
       "projectType": "application",
       "schematics": {},
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "client",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.client.json",
+            "index": "client/index.html",
+            "main": "client/main.ts",
+            "polyfills": "client/polyfills.ts",
+            "tsConfig": "client/tsconfig.client.json",
             "aot": false,
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": ["client/favicon.ico", "client/assets"],
+            "styles": ["client/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "client/environments/environment.ts",
+                  "with": "client/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -70,16 +70,16 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "configPath": "src/jest.spec.json"
+            "configPath": "client/jest.spec.json"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.spec.json",
-              "src/tsconfig.client.json",
-              "src/tsconfig.server.json",
+              "client/tsconfig.spec.json",
+              "client/tsconfig.client.json",
+              "client/tsconfig.server.json",
               "server/tsconfig.json",
               "server/tsconfig.spec.json"
             ],
@@ -89,7 +89,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "src/tests/e2e/protractor.conf.js",
+            "protractorConfig": "client/tests/e2e/protractor.conf.js",
             "devServerTarget": "teanjs-universal:serve"
           },
           "configurations": {
@@ -102,15 +102,15 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
+            "main": "client/main.server.ts",
+            "tsConfig": "client/tsconfig.server.json"
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "client/environments/environment.ts",
+                  "with": "client/environments/environment.prod.ts"
                 }
               ]
             }
