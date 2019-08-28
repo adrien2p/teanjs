@@ -3,7 +3,7 @@ import { SoftDeletableEntity } from '../../common/typeorm/entities/SoftDeletable
 
 @Entity('users')
 @Unique(['email'])
-export class User extends SoftDeletableEntity {
+export class UserEntity extends SoftDeletableEntity {
     @PrimaryGeneratedColumn()
     public id: number;
 

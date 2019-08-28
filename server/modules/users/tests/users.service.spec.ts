@@ -4,7 +4,7 @@ import { getConnectionToken, TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from '../users.service';
 import { UserSubscriberEntity } from '../user.subscriber-entity';
 import { Connection } from 'typeorm';
-import { User } from '../user.entity';
+import { UserEntity } from '../user.entity';
 import { CreateUserDto } from '../dtos/createUser.dto';
 import { UserRepository } from '../user.repository';
 
@@ -19,7 +19,7 @@ describe('UsersService', () => {
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            imports: [TypeOrmModule.forRoot(databaseConfig), TypeOrmModule.forFeature([User, UserRepository])],
+            imports: [TypeOrmModule.forRoot(databaseConfig), TypeOrmModule.forFeature([UserEntity, UserRepository])],
             providers: [UsersService, UserSubscriberEntity]
         }).compile();
 
@@ -50,7 +50,7 @@ describe('UsersService', () => {
     });
 
     describe('find users', () => {
-        let user: User = null;
+        let user: UserEntity = null;
 
         beforeEach(async () => {
             user = await usersService.createUser(fakeUserData);

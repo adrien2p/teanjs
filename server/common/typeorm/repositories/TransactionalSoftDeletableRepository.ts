@@ -56,9 +56,9 @@ export class TransactionalSoftDeletableRepository<Entity extends ObjectLiteral> 
             | ObjectID
             | ObjectID[]
             | FindConditions<Entity>,
-        transactionalEntityManager?: EntityManager
+        options: { transactionalEntityManager?: EntityManager } = {}
     ): Promise<UpdateResult> {
-        const manager = transactionalEntityManager || this.manager;
+        const manager = options.transactionalEntityManager || this.manager;
         return await manager.update(this.metadata.target as any, criteria, { deletedAt: new Date() });
     }
 

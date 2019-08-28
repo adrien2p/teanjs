@@ -1,8 +1,6 @@
-import { JwtModuleOptions } from '@nestjs/jwt';
-
 const localJwtConfig = {
     secretOrKey: 'jwtSecret',
-    signOptions: { expiresIn: '60s' }
+    signOptions: { expiresIn: '60d' }
 };
 
 export default localJwtConfig;

@@ -1,11 +1,11 @@
 import { EntitySubscriberInterface, InsertEvent, Connection, UpdateEvent, RemoveEvent, EventSubscriber } from 'typeorm';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { Injectable } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { InjectConnection } from '@nestjs/typeorm';
 
 @Injectable()
-export class UserSubscriberEntity implements EntitySubscriberInterface<User> {
+export class UserSubscriberEntity implements EntitySubscriberInterface<UserEntity> {
     constructor(
         @InjectConnection() private readonly connection: Connection,
         private readonly usersService: UsersService
@@ -14,10 +14,10 @@ export class UserSubscriberEntity implements EntitySubscriberInterface<User> {
     }
 
     listenTo(): Function {
-        return User;
+        return UserEntity;
     }
 
-    public async beforeInsert(event: InsertEvent<User>): Promise<void> {
+    public async beforeInsert(event: InsertEvent<UserEntity>): Promise<void> {
         const { hash: password, salt } = await this.usersService.hashPassword(event.entity.password);
         event.entity.password = password;
         event.entity.salt = salt;

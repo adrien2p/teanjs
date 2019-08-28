@@ -1,10 +1,12 @@
+import * as Boom from '@hapi/boom';
 import * as crypto from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dtos/createUser.dto';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from './user.repository';
 import { CustomFindManyOptions, CustomFindOneOptions } from '../../common/typeorm/customTypes';
+import { BoomException } from '../../common/exceptions/BoomException';
 
 @Injectable()
 export class UsersService {
@@ -44,13 +46,15 @@ export class UsersService {
     public async createUser(
         createUserDto: CreateUserDto,
         options: { transactionalEntityManager?: EntityManager } = {}
-    ): Promise<User> {
+    ): Promise<UserEntity> {
         const userCount = await this.userRepository.count({
             where: { email: createUserDto.email },
-            ...options
+            ...options,
+            force: true
         });
+
         if (userCount) {
-            throw new Error('A users with the same email already exists.');
+            throw new BoomException(Boom.badRequest('This email is already use.'));
         }
 
         const user = this.userRepository.create(createUserDto);
@@ -58,15 +62,15 @@ export class UsersService {
         return await this.userRepository.findOneOrFail(id, options);
     }
 
-    public async findOneUserOrFail(options: CustomFindOneOptions<User> = {}): Promise<User> {
+    public async findOneUserOrFail(options: CustomFindOneOptions<UserEntity> = {}): Promise<UserEntity> {
         return await this.userRepository.findOneOrFail(options);
     }
 
-    public async findUserById(id: number, options: CustomFindOneOptions<User> = {}): Promise<User> {
+    public async findUserById(id: number, options: CustomFindOneOptions<UserEntity> = {}): Promise<UserEntity> {
         return await this.userRepository.findOneOrFail(id, options);
     }
 
-    public async findUserByIds(ids: number[], options: CustomFindManyOptions<User> = {}): Promise<User[]> {
+    public async findUserByIds(ids: number[], options: CustomFindManyOptions<UserEntity> = {}): Promise<UserEntity[]> {
         return await this.userRepository.findByIds(ids, options);
     }
 }
