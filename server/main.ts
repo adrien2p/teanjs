@@ -1,27 +1,27 @@
-import * as Boom from '@hapi/boom';
 import * as cookieParser from 'cookie-parser';
 import { appConfig } from './environments/app';
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { BoomExceptionFilter } from './common/filters/boom-exception.filter';
-import { BoomException } from './common/exceptions/BoomException';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { BadRequestExceptionFilter } from './common/filters/badRequest-exception.filter';
 
 async function bootstrap() {
     const app = await NestFactory.create(ApplicationModule);
 
-    app.useGlobalFilters(new BoomExceptionFilter());
+    app.useGlobalFilters(new BadRequestExceptionFilter());
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,
             whitelist: true,
             forbidNonWhitelisted: true,
             exceptionFactory: errors => {
-                const messages = Object.keys(errors[0].constraints).map(key => {
-                    return `The ${errors[0].constraints[key]}`;
+                const messages = errors.map(error => {
+                    return Object.keys(error.constraints).map(key => {
+                        return `The ${error.constraints[key]}`;
+                    });
                 });
 
-                return new BoomException(Boom.badRequest([].concat(...messages).join(' - ')));
+                return new BadRequestException([].concat(...messages).join(' - '));
             }
         })
     );

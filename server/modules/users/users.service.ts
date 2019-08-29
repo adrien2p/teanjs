@@ -1,12 +1,11 @@
 import * as Boom from '@hapi/boom';
 import * as crypto from 'crypto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { UserEntity } from './user.entity';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from './user.repository';
 import { CustomFindManyOptions, CustomFindOneOptions } from '../../common/typeorm/customTypes';
-import { BoomException } from '../../common/exceptions/BoomException';
 
 @Injectable()
 export class UsersService {
@@ -54,7 +53,7 @@ export class UsersService {
         });
 
         if (userCount) {
-            throw new BoomException(Boom.badRequest('This email is already use.'));
+            throw new BadRequestException(Boom.badRequest('This email is already use.'));
         }
 
         const user = this.userRepository.create(createUserDto);

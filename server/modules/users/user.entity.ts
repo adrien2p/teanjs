@@ -7,7 +7,11 @@ export class UserEntity extends SoftDeletableEntity {
     @PrimaryGeneratedColumn()
     public id: number;
 
-    @Column({ nullable: false })
+    @Column({
+        type: 'varchar',
+        length: 100,
+        nullable: false
+    })
     public email: string;
 
     @Column({ nullable: false, select: false })
@@ -19,7 +23,7 @@ export class UserEntity extends SoftDeletableEntity {
     @Column({ nullable: true })
     public emailValidatedAt: Date;
 
-    @Column({ default: 'customer' })
+    @Column({ type: 'varchar', length: 50 })
     public role: string;
 
     @Column({ type: 'jsonb', default: [] })
