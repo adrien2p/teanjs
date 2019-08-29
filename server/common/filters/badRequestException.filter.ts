@@ -1,4 +1,4 @@
-import { Catch, ExceptionFilter, ArgumentsHost, BadRequestException } from '@nestjs/common';
+import { Catch, ExceptionFilter, ArgumentsHost, BadRequestException, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Catch(BadRequestException)
@@ -9,11 +9,11 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
         const request = ctx.getRequest<Request>();
         const status = exception.getStatus();
 
-        const data = exception.getResponse();
-        console.log(data);
+        Logger.error(exception.message.message, exception.stack, `${request.method} ${request.url}`);
+
         response.status(status).json({
             statusCode: status,
-            message: (data as any).message,
+            message: exception.message.message,
             timestamp: new Date().toISOString(),
             path: request.url,
             method: request.method

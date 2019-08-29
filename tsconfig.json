@@ -1,6 +1,7 @@
 {
    "compileOnSave": false,
    "compilerOptions": {
+      "incremental": true,
       "downlevelIteration": true,
       "importHelpers": true,
       "module": "commonjs",

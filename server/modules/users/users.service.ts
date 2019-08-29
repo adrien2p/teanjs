@@ -1,4 +1,3 @@
-import * as Boom from '@hapi/boom';
 import * as crypto from 'crypto';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateUserDto } from './dtos/createUser.dto';
@@ -6,6 +5,7 @@ import { UserEntity } from './user.entity';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from './user.repository';
 import { CustomFindManyOptions, CustomFindOneOptions } from '../../common/typeorm/customTypes';
+import { EntityNotFoundExceptionHandler } from '../../common/decorators/entityNotFoundExceptionHandler.decorator';
 
 @Injectable()
 export class UsersService {
@@ -53,7 +53,7 @@ export class UsersService {
         });
 
         if (userCount) {
-            throw new BadRequestException(Boom.badRequest('This email is already use.'));
+            throw new BadRequestException('This email is already use.');
         }
 
         const user = this.userRepository.create(createUserDto);
@@ -61,10 +61,12 @@ export class UsersService {
         return await this.userRepository.findOneOrFail(id, options);
     }
 
+    @EntityNotFoundExceptionHandler()
     public async findOneUserOrFail(options: CustomFindOneOptions<UserEntity> = {}): Promise<UserEntity> {
         return await this.userRepository.findOneOrFail(options);
     }
 
+    @EntityNotFoundExceptionHandler()
     public async findUserById(id: number, options: CustomFindOneOptions<UserEntity> = {}): Promise<UserEntity> {
         return await this.userRepository.findOneOrFail(id, options);
     }
