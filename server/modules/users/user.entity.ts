@@ -23,15 +23,15 @@ export class UserEntity extends SoftDeletableEntity {
     @Column({ nullable: true })
     public emailValidatedAt: Date;
 
-    @Column({ type: 'varchar', length: 50 })
+    @Column({ type: 'varchar', length: 50, nullable: true })
     public role: string;
 
-    @Column({ type: 'jsonb', default: [] })
+    @Column({ type: 'jsonb', default: [], nullable: false })
     public flags: string[];
 
     @CreateDateColumn({ type: 'timestamp with time zone', nullable: false })
     public createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp with time zone' })
+    @UpdateDateColumn({ type: 'timestamp with time zone', nullable: true })
     public updatedAt: Date;
 }

@@ -10,7 +10,6 @@
     "sourceMap": true,
     "outDir": "../dist/server-app",
     "baseUrl": "./",
-    "types": ["jest", "node"],
     "typeRoots": [
       "../node_modules/@types"
     ]
