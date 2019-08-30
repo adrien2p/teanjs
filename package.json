@@ -4,7 +4,7 @@
    "description": "TypeORM - Express - Angular 8 - NestJS Server Side Rendering (SSR) using universal",
    "main": " ",
    "author": "Adrien de Peretti <adrien.deperetti@gmail.com>",
-   "license": "ISC",
+   "license": "MIT",
    "private": true,
    "contributors": [
       "Adrien de Peretti <adrien.deperetti@gmail.com>"
