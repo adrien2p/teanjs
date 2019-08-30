@@ -5,7 +5,11 @@
   "projects": {
     "teanjs-universal": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "client",
       "prefix": "app",
