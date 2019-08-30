@@ -7,6 +7,8 @@ You will find a ready to use **users** and **auth** modules (among other functio
 
 Access the documentation [here](https://adrien2p.gitbook.io/teanjs/) 
 
+![teanjs documentation](https://res.cloudinary.com/ddhexo4ms/image/upload/v1567191265/TeanJS/teanjs_doc_vtr8hf.png)
+
 ## Authors
 
 * **Adrien de Peretti** - *Maintainer* - [adrien2p](https://github.com/adrien2p)
