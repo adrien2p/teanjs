@@ -8,7 +8,7 @@ import { CustomFindManyOptions, CustomFindOneOptions } from '../../common/typeor
 import { EntityNotFoundExceptionHandler } from '../../common/decorators/entityNotFoundExceptionHandler.decorator';
 
 @Injectable()
-export class UsersService {
+export class UserService {
     constructor(private readonly userRepository: UserRepository) {}
 
     public async hashPassword(originalPassword: string, defaultSalt?: string): Promise<{ hash: string; salt: string }> {

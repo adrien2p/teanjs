@@ -1,12 +1,12 @@
 import { Connection, EntitySubscriberInterface, InsertEvent } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { Injectable } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 import { InjectConnection } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserSubscriberEntity implements EntitySubscriberInterface<UserEntity> {
-    constructor(@InjectConnection() connection: Connection, private readonly usersService: UsersService) {
+    constructor(@InjectConnection() connection: Connection, private readonly usersService: UserService) {
         connection.subscribers.push(this);
     }
 

@@ -3,7 +3,7 @@ import { Controller, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LoggedInUserDecorator } from '../../common/decorators/loggedInUser.decorator';
-import { UserEntity } from '../users/user.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Controller()
 export class AuthController {
