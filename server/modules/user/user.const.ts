@@ -3,6 +3,4 @@ export enum UserRole {
     CUSTOMER = 'customer'
 }
 
-export enum UserFlags {
-
-}
+export enum UserFlags {}
