@@ -1,7 +1,8 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
-    "outDir": "../dist/server-app"
+    "outDir": "../dist/server-app",
+    "baseUrl": "./"
   },
   "include": ["**/*.ts"],
   "exclude": ["**/tests", "**/*.spec.ts", "e2e"]
