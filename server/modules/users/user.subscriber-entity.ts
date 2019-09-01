@@ -6,10 +6,7 @@ import { InjectConnection } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserSubscriberEntity implements EntitySubscriberInterface<UserEntity> {
-    constructor(
-        @InjectConnection() connection: Connection,
-        private readonly usersService: UsersService
-    ) {
+    constructor(@InjectConnection() connection: Connection, private readonly usersService: UsersService) {
         connection.subscribers.push(this);
     }
 
