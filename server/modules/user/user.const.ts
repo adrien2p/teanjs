@@ -1,5 +1,8 @@
 export enum UserRole {
     ADMIN = 'admin',
-    FREELANCER = 'freelancer',
-    COMPANY = 'company'
+    CUSTOMER = 'customer'
+}
+
+export enum UserFlags {
+
 }

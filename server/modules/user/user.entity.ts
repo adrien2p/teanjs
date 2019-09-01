@@ -23,7 +23,7 @@ export class UserEntity extends SoftDeletableEntity {
     @Column({ nullable: true })
     public emailValidatedAt!: Date;
 
-    @Column({ type: 'varchar', length: 50, nullable: true })
+    @Column({ type: 'varchar', length: 50, nullable: false })
     public role!: string;
 
     @Column({ type: 'jsonb', default: [], nullable: false })

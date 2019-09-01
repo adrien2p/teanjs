@@ -10,7 +10,7 @@ export class usersCreateTable1566380859753 implements MigrationInterface {
                 password TEXT NOT NULL,
                 salt TEXT NOT NULL,
                 "emailValidatedAt" TIMESTAMP,
-                "role" VARCHAR(50),
+                "role" VARCHAR(50) DEFAULT 'customer',
                 "flags" JSONB DEFAULT '[]' :: JSONB,
                 "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 "updatedAt" TIMESTAMP,
