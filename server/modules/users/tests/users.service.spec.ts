@@ -13,12 +13,12 @@ describe('UsersService', () => {
         email: 'test@test.fr',
         password: 'password'
     };
-    let usersService: UsersService = null;
-    let connection: Connection = null;
-    let module: TestingModule = null;
+    let usersService!: UsersService;
+    let connection!: Connection;
+    let module!: TestingModule;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        module = await Test.createTestingModule({
             imports: [TypeOrmModule.forRoot(databaseConfig), TypeOrmModule.forFeature([UserEntity, UserRepository])],
             providers: [UsersService, UserSubscriberEntity]
         }).compile();
@@ -50,7 +50,7 @@ describe('UsersService', () => {
     });
 
     describe('find users', () => {
-        let user: UserEntity = null;
+        let user!: UserEntity;
 
         beforeEach(async () => {
             user = await usersService.createUser(fakeUserData);

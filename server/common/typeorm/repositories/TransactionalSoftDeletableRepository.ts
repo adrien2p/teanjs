@@ -77,7 +77,7 @@ export class TransactionalSoftDeletableRepository<Entity extends ObjectLiteral> 
             updatedEntities.push(updatedEntity);
         }
 
-        return updatedEntities.length === 1 ? updatedEntities.pop() : updatedEntities;
+        return updatedEntities.length === 1 ? updatedEntities[0] : updatedEntities;
     }
 
     protected softDeletableOptionsUpdate(options: any = {}): any {

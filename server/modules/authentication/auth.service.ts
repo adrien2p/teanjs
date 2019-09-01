@@ -7,7 +7,7 @@ import { UserEntity } from '../users/user.entity';
 export class AuthService {
     constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
 
-    public async validateUser(email: string, pass: string): Promise<UserEntity> {
+    public async validateUser(email: string, pass: string): Promise<UserEntity | null> {
         const user = await this.usersService.findOneUserOrFail({
             where: { email },
             select: ['id', 'password', 'salt']

@@ -1,4 +1,4 @@
-import { DeepPartial, EntityManager, ObjectLiteral, Repository, ObjectID, FindConditions } from 'typeorm';
+import { DeepPartial, EntityManager, ObjectID, ObjectLiteral, Repository } from 'typeorm';
 import {
     CustomFindConditions,
     CustomFindManyOptions,

@@ -22,7 +22,7 @@ async function bootstrap() {
                     });
                 });
 
-                return new BadRequestException([].concat(...messages).join(' - '));
+                return new BadRequestException([].concat(...(messages as any)).join(' - '));
             }
         })
     );
@@ -37,4 +37,4 @@ async function bootstrap() {
     await app.listen(appConfig.port);
 }
 
-bootstrap();
+bootstrap().then(() => true);

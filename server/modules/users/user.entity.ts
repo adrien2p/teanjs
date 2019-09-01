@@ -5,33 +5,33 @@ import { SoftDeletableEntity } from '../../common/typeorm/entities/SoftDeletable
 @Unique(['email'])
 export class UserEntity extends SoftDeletableEntity {
     @PrimaryGeneratedColumn()
-    public id: number;
+    public id!: number;
 
     @Column({
         type: 'varchar',
         length: 100,
         nullable: false
     })
-    public email: string;
+    public email!: string;
 
     @Column({ nullable: false, select: false })
-    public password: string;
+    public password!: string;
 
     @Column({ nullable: false, select: false })
-    public salt: string;
+    public salt!: string;
 
     @Column({ nullable: true })
-    public emailValidatedAt: Date;
+    public emailValidatedAt!: Date;
 
     @Column({ type: 'varchar', length: 50, nullable: true })
-    public role: string;
+    public role!: string;
 
     @Column({ type: 'jsonb', default: [], nullable: false })
-    public flags: string[];
+    public flags!: string[];
 
     @CreateDateColumn({ type: 'timestamp with time zone', nullable: false })
-    public createdAt: Date;
+    public createdAt!: Date;
 
     @UpdateDateColumn({ type: 'timestamp with time zone', nullable: true })
-    public updatedAt: Date;
+    public updatedAt!: Date;
 }

@@ -6,7 +6,6 @@ import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UniversalInterceptorService } from './modules/shared/interceptors/universal-interceptor.service';
-import { WindowService } from './services/window/window.service';
 
 @NgModule({
     imports: [
@@ -25,10 +24,6 @@ import { WindowService } from './services/window/window.service';
             provide: HTTP_INTERCEPTORS,
             useClass: UniversalInterceptorService,
             multi: true // <-- important (you can have many interceptors)
-        },
-        {
-            provide: WindowService,
-            useClass: WindowService
         }
     ]
 })

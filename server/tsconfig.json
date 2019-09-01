@@ -1,18 +1,8 @@
 {
+  "extends": "../tsconfig",
   "compilerOptions": {
-    "incremental": true,
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": true,
-    "outDir": "../dist/server-app",
-    "baseUrl": "./",
-    "typeRoots": [
-      "../node_modules/@types"
-    ]
+    "outDir": "../dist/server-app"
   },
-  "exclude": ["node_modules", "dist", "**/tests", "**/*.spec.ts", "e2e"]
+  "include": ["**/*.ts"],
+  "exclude": ["**/tests", "**/*.spec.ts", "e2e"]
 }

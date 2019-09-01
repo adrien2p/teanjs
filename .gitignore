@@ -11,6 +11,7 @@
 /dist/
 /dist-server/
 /compiled/
+/out-tsc/
 
 # Node #
 *.log
