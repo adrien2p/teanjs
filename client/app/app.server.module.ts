@@ -5,7 +5,7 @@ import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader'
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UniversalInterceptorService } from './modules/shared/interceptors/universal-interceptor.service';
+import { UniversalInterceptor } from './common/interceptors/universal.interceptor';
 
 @NgModule({
     imports: [
@@ -22,7 +22,7 @@ import { UniversalInterceptorService } from './modules/shared/interceptors/unive
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: UniversalInterceptorService,
+            useClass: UniversalInterceptor,
             multi: true // <-- important (you can have many interceptors)
         }
     ]

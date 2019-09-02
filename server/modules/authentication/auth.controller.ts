@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { Controller, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
+import { Controller, HttpStatus, Post, Res, UseGuards, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LoggedInUserDecorator } from '../../common/decorators/loggedInUser.decorator';
