@@ -13,9 +13,9 @@ describe('UserService', () => {
         email: 'test@test.fr',
         password: 'password'
     };
-    let usersService!: UserService;
-    let connection!: Connection;
-    let module!: TestingModule;
+    let usersService: UserService;
+    let connection: Connection;
+    let module: TestingModule;
 
     beforeAll(async () => {
         module = await Test.createTestingModule({
