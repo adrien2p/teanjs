@@ -11,7 +11,10 @@ import { EntityNotFoundExceptionHandler } from '../../common/decorators/entityNo
 export class UserService {
     constructor(private readonly userRepository: UserRepository) {}
 
-    public async hashPassword(originalPassword: string, defaultSalt?: string): Promise<{ hash: string; salt: string }> {
+    public async hashPassword(
+        originalPassword: string,
+        defaultSalt?: string | undefined
+    ): Promise<{ hash: string; salt: string }> {
         const len = 128;
         const iterations = 30547;
 

@@ -28,7 +28,7 @@ describe('UserService', () => {
     });
 
     afterEach(async () => {
-        await connection.query('DELETE FROM user');
+        await connection.query('DELETE FROM users');
     });
 
     afterAll(async () => {
