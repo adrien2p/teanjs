@@ -3,6 +3,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import jwtConfig from '../../../environments/jwt';
 import { UserService } from '../../user/user.service';
+import { Observable } from 'rxjs';
+import { UserEntity } from '../../user/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -21,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    public async validate(payload: any): Promise<{ id: number; email: string }> {
-        return await this.userService.findUserById(payload.sub);
+    public validate(payload: any): Observable<UserEntity> {
+        return this.userService.findUserById(payload.sub);
     }
 }

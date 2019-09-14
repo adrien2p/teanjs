@@ -5,6 +5,7 @@ import { UserEntity } from '../../user/user.entity';
 import { fakeCredentials } from './fixtures/data/credentials.fake';
 import { fakeUser } from './fixtures/data/user.fake';
 import { JwtService } from './fixtures/mocks/jwt.service';
+import { Observable } from 'rxjs';
 
 describe('AuthService', () => {
     let authService: AuthService;
@@ -22,13 +23,24 @@ describe('AuthService', () => {
         await module.close();
     });
 
-    it('should validate a user', async () => {
-        const user: UserEntity | null = await authService.validateUser(fakeCredentials.email, fakeCredentials.password);
-        expect(user).toBe(fakeUser);
+    it('should validate a user', (done: () => void) => {
+        const user$: Observable<UserEntity | null> = authService.validateUser(
+            fakeCredentials.email,
+            fakeCredentials.password
+        );
+
+        user$.subscribe((user: UserEntity | null) => {
+            expect(user).toBe(fakeUser);
+            done();
+        });
     });
 
-    it('should not validate a user', async () => {
-        const user: UserEntity | null = await authService.validateUser(fakeCredentials.email, 'wrongpassword');
-        expect(user).toBe(null);
+    it('should not validate a user', (done: () => void) => {
+        const user$: Observable<UserEntity | null> = authService.validateUser(fakeCredentials.email, 'wrongpassword');
+
+        user$.subscribe((user: UserEntity | null) => {
+            expect(user).toBe(null);
+            done();
+        });
     });
 });

@@ -1,11 +1,13 @@
 import * as crypto from 'crypto';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { UserEntity } from './user.entity';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from './user.repository';
 import { CustomFindManyOptions, CustomFindOneOptions } from '../../common/typeorm/customTypes';
-import { EntityNotFoundExceptionHandler } from '../../common/decorators/entityNotFoundExceptionHandler.decorator';
+import { EntityNotFoundExceptionHandler } from '../../common/decorators/exceptionHanlders/entityNotFound.exception-handler.decorator';
+import { from, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -45,36 +47,41 @@ export class UserService {
         });
     }
 
-    public async createUser(
+    public createUser(
         createUserDto: CreateUserDto,
         options: { transactionalEntityManager?: EntityManager } = {}
-    ): Promise<UserEntity> {
-        const userCount = await this.userRepository.count({
-            where: { email: createUserDto.email },
-            ...options,
-            force: true
-        });
+    ): Observable<UserEntity> {
+        const userCount$: Observable<number> = from(
+            this.userRepository.count({
+                where: { email: createUserDto.email },
+                ...options,
+                force: true
+            })
+        );
 
-        if (userCount) {
-            throw new BadRequestException('This email is already use.');
-        }
-
-        const user = this.userRepository.create(createUserDto);
-        const { id } = await this.userRepository.save(user, options);
-        return await this.userRepository.findOneOrFail(id, options);
+        return userCount$.pipe(
+            map((count: number) => {
+                if (count) {
+                    throw new BadRequestException('This email is already use.');
+                }
+                return this.userRepository.create(createUserDto);
+            }),
+            switchMap((user: UserEntity) => from(this.userRepository.save(user, options))),
+            switchMap((user: UserEntity) => this.userRepository.findOneOrFail(user.id, options))
+        );
     }
 
     @EntityNotFoundExceptionHandler()
-    public async findOneUserOrFail(options: CustomFindOneOptions<UserEntity> = {}): Promise<UserEntity> {
-        return await this.userRepository.findOneOrFail(options);
+    public findOneUserOrFail(options: CustomFindOneOptions<UserEntity> = {}): Observable<UserEntity> {
+        return from(this.userRepository.findOneOrFail(options)).pipe(map((user: UserEntity) => user));
     }
 
     @EntityNotFoundExceptionHandler()
-    public async findUserById(id: number, options: CustomFindOneOptions<UserEntity> = {}): Promise<UserEntity> {
-        return await this.userRepository.findOneOrFail(id, options);
+    public findUserById(id: number, options: CustomFindOneOptions<UserEntity> = {}): Observable<UserEntity> {
+        return from(this.userRepository.findOneOrFail(id, options)).pipe(map((user: UserEntity) => user));
     }
 
-    public async findUserByIds(ids: number[], options: CustomFindManyOptions<UserEntity> = {}): Promise<UserEntity[]> {
-        return await this.userRepository.findByIds(ids, options);
+    public findUserByIds(ids: number[], options: CustomFindManyOptions<UserEntity> = {}): Observable<UserEntity[]> {
+        return from(this.userRepository.findByIds(ids, options)).pipe(map((users: UserEntity[]) => users));
     }
 }
