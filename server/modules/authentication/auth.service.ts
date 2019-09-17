@@ -3,7 +3,7 @@ import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/user.entity';
 import { from, Observable, of } from 'rxjs';
-import { map, switchAll, switchMap, mergeAll, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -18,13 +18,12 @@ export class AuthService {
         );
 
         return user$.pipe(
-            map((user: UserEntity) => {
+            switchMap((user: UserEntity) => {
                 return from(this.usersService.hashPassword(pass, user.salt)).pipe(
                     map(v => ({ passwordHash: v.hash, user }))
                 );
             }),
-            mergeAll(),
-            mergeMap(({ passwordHash, user }: { passwordHash: string; user: UserEntity }) => {
+            switchMap(({ passwordHash, user }: { passwordHash: string; user: UserEntity }) => {
                 if (user && user.password === passwordHash) {
                     return from(this.usersService.findUserById(user.id));
                 }
