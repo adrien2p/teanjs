@@ -1,15 +1,14 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger, HttpException } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { EntityNotFoundException } from '../exceptions/entityNotFound.exception';
 import { buildResponseError } from '../utilities/buildResponseError';
 
-@Catch(EntityNotFoundException)
+@Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
     catch(exception: unknown, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();
-        const message = (exception as any).message;
+        const message = (exception as any).message.message;
 
         Logger.error(message, (exception as any).stack, `${request.method} ${request.url}`);
 

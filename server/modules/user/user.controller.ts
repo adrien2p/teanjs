@@ -1,11 +1,14 @@
 import { Response } from 'express';
-import { Body, Controller, Get, HttpStatus, Param, Post, Res, UseGuards, HttpCode } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserEntity } from './user.entity';
+import { LoggedInUser } from '../../common/decorators/loggedInUser.decorator';
+import { RequestedUser } from '../../common/decorators/requestedUser.decorator';
+import { FetchRequestedUserGuard } from '../../common/guards/fetchRequestedUser.guard';
 
 @Controller('users')
 export class UserController {
@@ -18,11 +21,15 @@ export class UserController {
         return user$.pipe(map((user: UserEntity) => res.send(user)));
     }
 
-    @Get(':id')
-    @UseGuards(AuthGuard())
+    @Get(':userId')
+    @UseGuards(AuthGuard(), FetchRequestedUserGuard)
     @HttpCode(HttpStatus.FOUND)
-    public findOne(@Param('id') id: number, @Res() res: Response): Observable<Response> {
-        const user$ = this.usersService.findUserById(id);
-        return user$.pipe(map((user: UserEntity) => res.send(user)));
+    public findOne(
+        @LoggedInUser() loggedInUser: UserEntity,
+        @RequestedUser() user: UserEntity,
+        @Param('id') id: number,
+        @Res() res: Response
+    ): Response {
+        return res.send(user);
     }
 }

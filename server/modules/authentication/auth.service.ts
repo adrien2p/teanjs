@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/user.entity';
-import { from, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { from, Observable, of, pipe } from 'rxjs';
+import { map, switchMap, mergeMap, mergeAll, switchAll } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -11,18 +11,19 @@ export class AuthService {
 
     public validateUser(email: string, pass: string): Observable<UserEntity | null> {
         const user$: Observable<UserEntity> = from(
-            this.usersService.findOneUserOrFail({
+            this.usersService.findOneUser({
                 where: { email },
                 select: ['id', 'password', 'salt']
             })
         );
 
         return user$.pipe(
-            switchMap((user: UserEntity) => {
+            map((user: UserEntity) => {
                 return from(this.usersService.hashPassword(pass, user.salt)).pipe(
                     map(v => ({ passwordHash: v.hash, user }))
                 );
             }),
+            switchAll(),
             switchMap(({ passwordHash, user }: { passwordHash: string; user: UserEntity }) => {
                 if (user && user.password === passwordHash) {
                     return from(this.usersService.findUserById(user.id));

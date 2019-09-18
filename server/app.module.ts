@@ -19,8 +19,6 @@ applyDomino(global, join(BROWSER_DIR, 'index.html'));
         TypeOrmModule.forRoot(databaseConfig),
         UserModule,
         AuthModule
-    ],
-    providers: [],
-    controllers: []
+    ]
 })
 export class ApplicationModule {}

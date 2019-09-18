@@ -72,7 +72,7 @@ export class UserService {
     }
 
     @EntityNotFoundExceptionHandler()
-    public findOneUserOrFail(options: CustomFindOneOptions<UserEntity> = {}): Observable<UserEntity> {
+    public findOneUser(options: CustomFindOneOptions<UserEntity> = {}): Observable<UserEntity> {
         return from(this.userRepository.findOneOrFail(options)).pipe(map((user: UserEntity) => user));
     }
 
@@ -83,5 +83,9 @@ export class UserService {
 
     public findUserByIds(ids: number[], options: CustomFindManyOptions<UserEntity> = {}): Observable<UserEntity[]> {
         return from(this.userRepository.findByIds(ids, options)).pipe(map((users: UserEntity[]) => users));
+    }
+
+    public canAccessUser(user: UserEntity, loggedInUser: UserEntity): Observable<boolean> {
+        return this.userRepository.canAccess(user, loggedInUser).pipe(map((canAccess: boolean) => canAccess));
     }
 }

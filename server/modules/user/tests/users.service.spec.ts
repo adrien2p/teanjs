@@ -63,7 +63,7 @@ describe('UserService', () => {
         });
 
         it('should return a user without failing when searching with conditions', (done: () => void) => {
-            const user$: Observable<UserEntity> = usersService.findOneUserOrFail({ where: { id: user.id } });
+            const user$: Observable<UserEntity> = usersService.findOneUser({ where: { id: user.id } });
 
             user$.subscribe((userFound: UserEntity) => {
                 expect(userFound).toBeTruthy();
