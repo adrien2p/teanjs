@@ -6,7 +6,6 @@ export class UniversalInterceptor implements HttpInterceptor {
     constructor(@Optional() @Inject('serverUrl') protected serverUrl?: string | undefined) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
-        // console.log(`intercepting the url ${req.url}`);
         const serverReq = !this.serverUrl
             ? req
             : req.clone({

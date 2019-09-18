@@ -2,14 +2,19 @@ import * as cookieParser from 'cookie-parser';
 import { appConfig } from './environments/app';
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
-import { BadRequestException, ValidationPipe, Logger } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { BadRequestExceptionFilter } from './common/filters/badRequestException.filter';
 import { EntityNotFoundExceptionFilter } from './common/filters/entityNotFoundException.filter';
+import { HttpExceptionFilter } from './common/filters/httpException.filter';
 
 async function bootstrap() {
     const app = await NestFactory.create(ApplicationModule);
 
-    app.useGlobalFilters(new BadRequestExceptionFilter(), new EntityNotFoundExceptionFilter());
+    app.useGlobalFilters(
+        new HttpExceptionFilter(),
+        new BadRequestExceptionFilter(),
+        new EntityNotFoundExceptionFilter()
+    );
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,

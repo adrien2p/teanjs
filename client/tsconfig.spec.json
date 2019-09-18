@@ -1,16 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/spec",
-    "baseUrl": "./",
-    "module": "commonjs",
-    "target": "es2015",
-    "types": [
-      "jest"
-    ]
+    "outDir": "../out-tsc/spec"
   },
   "include": [
     "**/*.spec.ts"
-  ],
-  "exclude": []
+  ]
 }

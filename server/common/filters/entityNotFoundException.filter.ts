@@ -1,6 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { EntityNotFoundException } from '../exceptions/entityNotFound.exception';
+import { buildResponseError } from '../utilities/buildResponseError';
 
 @Catch(EntityNotFoundException)
 export class EntityNotFoundExceptionFilter implements ExceptionFilter {
@@ -8,17 +9,12 @@ export class EntityNotFoundExceptionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();
+        const message = exception.message;
 
         const { target, method } = exception.context;
-        const contextDescriptor = `${target.constructor.name}#${method}`;
-        Logger.error(exception.message, exception.stack, `${request.method} ${request.url} -> ${contextDescriptor}`);
+        const contextDescriptor = `${target.constructor.name}::${method}`;
+        Logger.error(message, exception.stack, `${request.method} ${request.url} -> ${contextDescriptor}`);
 
-        response.status(HttpStatus.BAD_REQUEST).json({
-            statusCode: HttpStatus.BAD_REQUEST,
-            message: exception.message,
-            timestamp: new Date().toISOString(),
-            path: request.url,
-            method: request.method
-        });
+        response.status(HttpStatus.BAD_REQUEST).json(buildResponseError(HttpStatus.BAD_REQUEST, message, request));
     }
 }

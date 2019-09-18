@@ -23,8 +23,13 @@
             "polyfills": "client/polyfills.ts",
             "tsConfig": "client/tsconfig.client.json",
             "aot": false,
-            "assets": ["client/favicon.ico", "client/assets"],
-            "styles": ["client/styles.scss"],
+            "assets": [
+              "client/favicon.ico",
+              "client/assets"
+            ],
+            "styles": [
+              "client/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -84,13 +89,15 @@
               "client/tsconfig.spec.json",
               "client/tsconfig.client.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "client/tests/e2e/protractor.conf.js",
+            "protractorConfig": "client/e2e/protractor.conf.js",
             "devServerTarget": "teanjs-universal:serve"
           },
           "configurations": {

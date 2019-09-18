@@ -7,6 +7,7 @@ import { Connection } from 'typeorm';
 import { UserEntity } from '../user.entity';
 import { CreateUserDto } from '../dtos/createUser.dto';
 import { UserRepository } from '../user.repository';
+import { Observable } from 'rxjs';
 
 describe('UserService', () => {
     const fakeUserData: CreateUserDto = {
@@ -28,49 +29,70 @@ describe('UserService', () => {
     });
 
     afterEach(async () => {
-        await connection.query('DELETE FROM user');
+        await connection.query('DELETE FROM users');
     });
 
     afterAll(async () => {
-        await connection.close();
         await module.close();
     });
 
     it('should return a hash/salt from a string', async () => {
-        const { hash, salt } = await usersService.hashPassword('password');
+        const { hash, salt }: { hash: string; salt: string } = await usersService.hashPassword('password');
 
         expect(hash).not.toBeUndefined();
         expect(salt).not.toBeUndefined();
     });
 
-    it('should return the new created user', async () => {
-        const user = await usersService.createUser(fakeUserData);
+    it('should return the new created user', (done: () => void) => {
+        const user$: Observable<UserEntity> = usersService.createUser(fakeUserData);
 
-        expect(user).toBeTruthy();
+        user$.subscribe(user => {
+            expect(user).toBeTruthy();
+            done();
+        });
     });
 
     describe('find user', () => {
-        let user!: UserEntity;
+        let user: UserEntity;
 
-        beforeEach(async () => {
-            user = await usersService.createUser(fakeUserData);
+        beforeEach((done: () => void) => {
+            usersService.createUser(fakeUserData).subscribe((userCreated: UserEntity) => {
+                user = userCreated;
+                done();
+            });
         });
 
-        it('should return an array of user', async () => {
-            const usersFound = await usersService.findUserByIds([user.id]);
+        it('should return a user without failing when searching with conditions', (done: () => void) => {
+            const user$: Observable<UserEntity> = usersService.findOneUser({ where: { id: user.id } });
 
-            expect(usersFound.length).toBe(1);
-            expect(usersFound[0]).toBeTruthy();
-            expect(usersFound[0].id).toBe(user.id);
+            user$.subscribe((userFound: UserEntity) => {
+                expect(userFound).toBeTruthy();
+                expect(userFound.id).toBe(user.id);
+                done();
+            });
         });
 
-        it('should return a unique user with only selectable column', async () => {
-            const userFound = await usersService.findUserById(user.id);
+        it('should return an array of user when searching by ids', (done: () => void) => {
+            const users$: Observable<UserEntity[]> = usersService.findUserByIds([user.id]);
 
-            expect(userFound).toBeTruthy();
-            expect(userFound.id).toBe(user.id);
-            expect(userFound.password).toBeUndefined();
-            expect(userFound.salt).toBeUndefined();
+            users$.subscribe((usersFound: UserEntity[]) => {
+                expect(usersFound.length).toBe(1);
+                expect(usersFound[0]).toBeTruthy();
+                expect(usersFound[0].id).toBe(user.id);
+                done();
+            });
+        });
+
+        it('should return a unique user with only selectable column when searching by id', (done: () => void) => {
+            const user$: Observable<UserEntity> = usersService.findUserById(user.id);
+
+            user$.subscribe((userFound: UserEntity) => {
+                expect(userFound).toBeTruthy();
+                expect(userFound.id).toBe(user.id);
+                expect(userFound.password).toBeUndefined();
+                expect(userFound.salt).toBeUndefined();
+                done();
+            });
         });
     });
 });

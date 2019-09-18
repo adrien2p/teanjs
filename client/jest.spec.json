@@ -13,7 +13,7 @@
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
   },
-  "testMatch": ["**/?(*.)+(spec|test).[jt]s?(x)" ],
+  "testMatch": ["**/client/**/?(*.)+(spec|test).[jt]s" ],
   "collectCoverageFrom" : ["./**/*.{js,jsx,tsx,ts}", "!**/node_modules/**", "!**/vendor/**"],
   "coverageReporters": ["json", "lcov"]
 }

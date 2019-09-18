@@ -8,7 +8,8 @@
     "typeRoots": ["../node_modules/@types"]
   },
   "exclude": [
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "e2e"
   ],
   "angularCompilerOptions": {
     "entryModule": "./app/app.server.module#AppServerModule"
