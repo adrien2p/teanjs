@@ -14,12 +14,6 @@ Access the documentation [here](https://adrien2p.gitbook.io/teanjs/)
 
 ![teanjs documentation](https://res.cloudinary.com/ddhexo4ms/image/upload/v1567191265/TeanJS/teanjs_doc_vtr8hf.png)
 
-## ToDo
-
--   [ ] Client() AuthService
--   [ ] Client() Login Page
--   [x] Server() AuthService units
-        ...
 
 ## Authors
 
