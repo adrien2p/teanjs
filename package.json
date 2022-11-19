@@ -75,14 +75,14 @@
     "tslib": "^1.10.0",
     "typeorm": "0.2.25",
     "typeorm-transactional-cls-hooked": "^0.1.8",
-    "webpack-cli": "3.3.6",
+    "webpack-cli": "3.3.12",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-node-externals": "^1.7.2",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-builders/jest": "^8.0.4",
-    "@angular-devkit/build-angular": "~0.801.1",
+    "@angular-devkit/build-angular": "~15.0.0",
     "@angular/cli": "~8.1.1",
     "@angular/compiler-cli": "~8.1.1",
     "@angular/language-service": "~8.1.1",
