@@ -56,7 +56,7 @@
     "@nguniversal/express-engine": "8.1.1",
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
     "class-transformer": "^0.3.1",
-    "class-validator": "^0.10.0",
+    "class-validator": "^0.14.0",
     "classlist.js": "1.1.20150312",
     "cookie-parser": "^1.4.4",
     "core-js": "^2.6.5",
