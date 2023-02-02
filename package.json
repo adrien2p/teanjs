@@ -83,7 +83,7 @@
   "devDependencies": {
     "@angular-builders/jest": "^8.0.4",
     "@angular-devkit/build-angular": "~0.801.1",
-    "@angular/cli": "~8.1.1",
+    "@angular/cli": "~15.1.4",
     "@angular/compiler-cli": "~8.1.1",
     "@angular/language-service": "~8.1.1",
     "@nestjs/testing": "^6.5.3",
