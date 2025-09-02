@@ -5,7 +5,7 @@ import { UserEntity } from './user.entity';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from './user.repository';
 import { CustomFindManyOptions, CustomFindOneOptions } from '../../common/typeorm/customTypes';
-import { EntityNotFoundExceptionHandler } from '../../common/decorators/exceptionHanlders/entityNotFound.exception-handler.decorator';
+import { EntityNotFoundExceptionHandler } from '../../common/decorators/exceptionHandlers/entityNotFound.exception-handler.decorator';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
